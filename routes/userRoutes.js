@@ -1,10 +1,13 @@
-const { register, login, setAvatar, getAllUsers } = require("../controllers/userController")
+const { isAuthorized } = require("../controllers/authController")
+const { register, login, setAvatar, getAllUsers, logout, getCurrentUserDetails } = require("../controllers/userController")
 
 const router = require("express").Router()
 
 router.post('/register', register)
 router.post('/login', login)
-router.post('/setAvatar/:id', setAvatar)
-router.get('/allusers/:id', getAllUsers)
+router.get('/logout', logout)
+router.post('/setAvatar', isAuthorized, setAvatar)
+router.get('/allusers/:id', isAuthorized, getAllUsers)
+router.get('/', isAuthorized, getCurrentUserDetails)
 
 module.exports = router

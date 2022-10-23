@@ -2,18 +2,27 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 const socket = require("socket.io")
+const cookieParser = require("cookie-parser")
+const jwt = require("jsonwebtoken")
 
 const userRoutes = require("./routes/userRoutes")
 const messagesRoute = require("./routes/messagesRoute")
+const authRoute = require("./routes/authRoutes")
 
 const app = express()
 require("dotenv").config()
 
-app.use(cors())
-app.use(express.json())
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}))
 
-app.use("/api/auth", userRoutes)
+app.use(express.json())
+app.use(cookieParser())
+
+app.use("/api/user", userRoutes)
 app.use("/api/messages", messagesRoute)
+app.use("/api/auth", authRoute)
  
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -33,6 +42,17 @@ const io = socket(server, {
 })
 
 global.onlineUsers = new Map()
+
+io.use((socket, next) => {
+    socket.on("send-msg", (data) => {
+        jwt.verify(data.token, process.env.ACCESS_TOKEN_SECRET_KEY, (err, user) => {
+            if(err) {
+                next(new Error("jwt expired or invalid"))
+            }
+        })
+    })
+    next()
+})
 
 io.on("connection", (socket) => {
     global.chatSocket = socket
