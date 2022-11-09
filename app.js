@@ -10,17 +10,7 @@ const userRoutes = require("./routes/userRoutes")
 const messagesRoute = require("./routes/messagesRoute")
 const authRoute = require("./routes/authRoutes")
 
-const app = express(session({
-    secret: 'MYSECRET',
-    name: 'chatt-app-backend',
-    resave: false,
-    saveUninitialized: false,
-    store: store,
-    cookie : {
-      sameSite: 'strict',
-      secure: true
-    }
-  }))
+const app = express()
 require("dotenv").config()
 
 app.use(cors({

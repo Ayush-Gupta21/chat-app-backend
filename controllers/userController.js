@@ -22,10 +22,9 @@ module.exports.register = async (req, res, next) => {
         //jwt
         const accessToken = jwt.sign({userId: user._id}, process.env.ACCESS_TOKEN_SECRET_KEY, {expiresIn: "20s"})
         const refreshToken = jwt.sign({userId: user._id}, process.env.REFRESH_TOKEN_SECRET_KEY, {expiresIn: "7d"})
-        res.cookie("accessToken", accessToken, {expires: new Date(Date.now() + 2592000000)})
-        res.cookie("refreshToken", refreshToken, {expires: new Date(Date.now() + 2592000000)})
+        res.cookie("accessToken", accessToken, {expires: new Date(Date.now() + 2592000000), sameSite: 'none', secure: true})
+        res.cookie("refreshToken", refreshToken, {expires: new Date(Date.now() + 2592000000), sameSite: 'none', secure: true})
         return res.status(201).json({message: "User Registered Successfully!", status: true})
-        // return res.json({token, status: true, user})
     } catch (e) {
         next(e)
     }
@@ -40,11 +39,9 @@ module.exports.login = async (req, res, next) => {
         }
         const accessToken = jwt.sign({userId: user._id}, process.env.ACCESS_TOKEN_SECRET_KEY, {expiresIn: "20s"})
         const refreshToken = jwt.sign({userId: user._id}, process.env.REFRESH_TOKEN_SECRET_KEY, {expiresIn: "7d"})
-        res.cookie("accessToken", accessToken, {expires: new Date(Date.now() + 2592000000)})
-        res.cookie("refreshToken", refreshToken, {expires: new Date(Date.now() + 2592000000)})
-        // res.header("Access-Control-Allow-Credentials", true)
+        res.cookie("accessToken", accessToken, {expires: new Date(Date.now() + 2592000000), sameSite: 'none', secure: true})
+        res.cookie("refreshToken", refreshToken, {expires: new Date(Date.now() + 2592000000), sameSite: 'none', secure: true})
         return res.json({status: true, message: "User Successfully Logged In!"})
-        // return res.json({status: true, user})
     } catch (e) {
         next(e)
     }

@@ -23,7 +23,7 @@ module.exports.renewAccessToken = (req, res) => {
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY, (err, user) => {
         if(!err) {
             const accessToken = jwt.sign({userId: user.userId}, process.env.ACCESS_TOKEN_SECRET_KEY, {expiresIn: "20s"})
-            res.cookie("accessToken", accessToken, {expiresIn: new Date(Date.now() + 2592000000)})
+            res.cookie("accessToken", accessToken, {expiresIn: new Date(Date.now() + 2592000000), sameSite: 'none', secure: true})
             return res.json({success: true, message: "Access Tokken created successfully!"})
         } else {
             return res.status(401).json({success: false, message: "Invalid Refresh Token, User has to Login Again!"})
