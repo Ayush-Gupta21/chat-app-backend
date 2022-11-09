@@ -4,7 +4,6 @@ const mongoose = require("mongoose")
 const socket = require("socket.io")
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken")
-const session = require("express-session")
 
 const userRoutes = require("./routes/userRoutes")
 const messagesRoute = require("./routes/messagesRoute")
@@ -37,7 +36,7 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = socket(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://chat-app-ayush-gupta.netlify.app",
         credentials: true
     }
 })
