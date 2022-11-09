@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const socket = require("socket.io")
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken")
+const session = require("express-session")
 
 const userRoutes = require("./routes/userRoutes")
 const messagesRoute = require("./routes/messagesRoute")
