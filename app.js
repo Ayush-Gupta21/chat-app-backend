@@ -10,6 +10,9 @@ const messagesRoute = require("./routes/messagesRoute")
 const authRoute = require("./routes/authRoutes")
 
 const app = express(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
     cookie: { secure: true }
   }))
 require("dotenv").config()
