@@ -13,7 +13,7 @@ const app = express()
 require("dotenv").config()
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://chat-app-ayush-gupta.netlify.app/login",
     credentials: true
 }))
 
@@ -63,7 +63,6 @@ io.on("connection", (socket) => {
 
     socket.on("send-msg", (data) => {
         const sendUserSocket = onlineUsers.get(data.to)
-        console.log(sendUserSocket)
         if(sendUserSocket) {
             socket.to(sendUserSocket).emit("msg-receive", {
                 from: data.from,
