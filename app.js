@@ -9,7 +9,9 @@ const userRoutes = require("./routes/userRoutes")
 const messagesRoute = require("./routes/messagesRoute")
 const authRoute = require("./routes/authRoutes")
 
-const app = express()
+const app = express(session({
+    cookie: { secure: true }
+  }))
 require("dotenv").config()
 
 app.use(cors({
