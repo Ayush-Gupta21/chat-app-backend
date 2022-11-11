@@ -13,7 +13,7 @@ const app = express()
 require("dotenv").config()
 
 app.use(cors({
-    origin: "https://chat-app-ayush-gupta.netlify.app",
+    origin: process.env.FRONTEND_URL,
     credentials: true
 }))
 
@@ -36,12 +36,27 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = socket(server, {
     cors: {
-        origin: "https://chat-app-ayush-gupta.netlify.app",
+        origin: process.env.FRONTEND_URL,
         credentials: true
     }
 })
 
 global.onlineUsers = new Map()
+
+socket.on('popup', function(msg){
+    console.log("hello: ", msg)
+});
+socket.on('connection', function() {
+    console.log("client connected");
+});
+
+socket.on('connect_error', function(err) {
+    console.log("client connect_error: ", err);
+});
+
+socket.on('connect_timeout', function(err) {
+    console.log("client connect_timeout: ", err);
+});
 
 io.use((socket, next) => {
     socket.on("send-msg", (data) => {
