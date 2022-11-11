@@ -43,15 +43,19 @@ const io = socket(server, {
 
 global.onlineUsers = new Map()
 
-socket.on('popup', function(msg){
+io.on('popup', function(msg){
     console.log("hello: ", msg)
 });
 
-socket.on('connect_error', function(err) {
+io.on('connection', function() {
+    console.log("client connected");
+});
+
+io.on('connect_error', function(err) {
     console.log("client connect_error: ", err);
 });
 
-socket.on('connect_timeout', function(err) {
+io.on('connect_timeout', function(err) {
     console.log("client connect_timeout: ", err);
 });
 
