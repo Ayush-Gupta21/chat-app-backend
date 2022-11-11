@@ -5,7 +5,7 @@ const router = require("express").Router()
 
 router.post('/register', register)
 router.post('/login', login)
-router.get('/logout', logout)
+router.post('/logout', logout)
 router.post('/setAvatar', isAuthorized, setAvatar)
 router.get('/allusers/:id', isAuthorized, getAllUsers)
 router.get('/', isAuthorized, getCurrentUserDetails)
