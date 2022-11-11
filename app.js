@@ -46,9 +46,6 @@ global.onlineUsers = new Map()
 socket.on('popup', function(msg){
     console.log("hello: ", msg)
 });
-socket.on('connection', function() {
-    console.log("client connected");
-});
 
 socket.on('connect_error', function(err) {
     console.log("client connect_error: ", err);
